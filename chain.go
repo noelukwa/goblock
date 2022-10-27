@@ -8,6 +8,9 @@ import (
 )
 
 const dbFile = "blockchain.db"
+
+// For simplicity, we're using a single bucket to store the block hash.
+// Bitcoin core uses two buckets: one for metadata of all blocks and another for chain state.
 const blocksBucket = "blocks"
 
 const targetBits = 24
@@ -71,6 +74,8 @@ func NewBlockchain() *Blockchain {
 				log.Panic(err)
 			}
 
+			// 'l' -> 4-byte file number: the last block file number used
+			// https://en.bitcoin.it/wiki/Bitcoin_Core_0.11_(ch_2):_Data_Storage
 			err = b.Put([]byte("l"), genesis.Hash)
 			if err != nil {
 				log.Panic(err)

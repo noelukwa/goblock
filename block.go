@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+// Block is the basic structure of a block in the blockchain, it contains the
+// data, the hash of the previous block, the hash of the current block and the
+// timestamp of the block creation.
 type Block struct {
 	TimeStamp int64
 
@@ -19,6 +22,8 @@ type Block struct {
 	Nonce int
 }
 
+// SetHash calculates and sets block hash, for simplicity the hash is just SHA-256 of
+// the block data.
 func (b *Block) SetHash() {
 	timestamp := []byte(strconv.FormatInt(b.TimeStamp, 10))
 	headers := bytes.Join([][]byte{b.PrevBlockHash, b.Data, timestamp}, []byte{})
@@ -27,6 +32,7 @@ func (b *Block) SetHash() {
 	b.Hash = hash[:]
 }
 
+// NewBlock creates and returns Block.
 func NewBlock(data string, prevBlockHash []byte) *Block {
 	block := &Block{time.Now().Unix(), prevBlockHash, []byte{}, []byte(data), 0}
 

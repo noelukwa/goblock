@@ -14,6 +14,7 @@ type ProofOfWork struct {
 	target *big.Int
 }
 
+// NewProofOfWork creates a new ProofOfWork.
 func NewProofOfWork(b *Block) *ProofOfWork {
 	target := big.NewInt(1)
 	target.Lsh(target, uint(256-targetBits))
